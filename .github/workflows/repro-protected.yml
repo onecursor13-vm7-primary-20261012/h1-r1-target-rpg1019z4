@@ -1,0 +1,28 @@
+name: Transferred extends protected consumer
+
+on:
+  push:
+    branches:
+      - h1-r1-protected-rpg1019z4
+    paths:
+      - deploy.sh
+
+permissions:
+  contents: read
+
+jobs:
+  protected-consumer:
+    runs-on: ubuntu-latest
+    environment: h1-r1-env-rpg1019z4
+    env:
+      PROTECTED_SECRET: ${{ secrets.REPRO_PROTECTED_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Execute protected deployment hook
+        run: bash deploy.sh
+      - name: Upload controlled protected output
+        uses: actions/upload-artifact@v4
+        with:
+          name: transferred-extends-protected-output
+          path: protected-output.bin
+          if-no-files-found: error

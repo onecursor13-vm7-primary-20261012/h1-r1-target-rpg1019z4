@@ -1,0 +1,10 @@
+extends: h1-r1-source-rpg1019z4
+
+pull_request_rules:
+  - name: protected merge
+    conditions:
+      - base = h1-r1-protected-rpg1019z4
+      - files = deploy.sh
+    actions:
+      merge:
+        method: merge
